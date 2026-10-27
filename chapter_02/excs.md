@@ -128,14 +128,33 @@ void fun(SqList*& L) {
 ### Q5:
 对于顺序表L，指出以下算法的功能。
 ```cpp
-void fun(SqList*& L, ElemType x) {
-  int i, j = 0;
-  for (i = 1; i < L->length; i++)
-    if (L->data[i] <= L->data[j]) j = i;
-  for (i = L->lenght; i > j; i++)
-    L->data[i] = L->data[i - 1];
-  L->length++;
-} 
+void fun(SqList* &L, ElemType x) {
+    // 边界检查：若顺序表已满，无法插入
+    if (L->length >= MaxSize) {
+        printf("顺序表已满，无法插入！\n");
+        return;
+    }
+
+    int i, j = 0;
+
+    // 1. 查找表中最后一个最小元素的下标 j
+    for (i = 1; i < L->length; i++) {
+        if (L->data[i] <= L->data[j]) {
+            j = i;
+        }
+    }
+
+    // 2. 将下标从 j 开始的元素依次向后移动一位
+    for (i = L->length; i > j; i--) {
+        L->data[i] = L->data[i - 1];
+    }
+
+    // 3. 在腾出的下标 j 处填入新元素 x
+    L->data[j] = x;
+
+    // 4. 表长加 1
+    L->length++;
+}
 ```
 
 #### 答案：
