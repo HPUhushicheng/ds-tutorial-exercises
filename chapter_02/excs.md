@@ -212,6 +212,28 @@ void fun(SqList*& L, ElemType x) {
 ### Q8:
 假设一个顺序表 $L$ 中的所有元素为整数，设计一个算法调整该顺序表，使其中所有小于零的元素放在所有大于等于零的元素的前面。
 ```cpp
+//重点：双指针 gemini代码
+void move(SqList &L) {
+    int i = 0;
+    int j = L.length - 1;
+
+    while (i < j) {
+        // 从左往右找第一个大于等于0的元素
+        while (i < j && L.data[i] < 0) {
+            i++;
+        }
+        // 从右往左找第一个小于0的元素
+        while (i < j && L.data[j] >= 0) {
+            j--;
+        }
+        // 将两者交换位置
+        if (i < j) {
+            int temp = L.data[i];
+            L.data[i] = L.data[j];
+            L.data[j] = temp;
+        }
+    }
+}
 // 算法复杂度O(n)，和第六题核心算法一样。双指针也可以做。
 void fun(SqList*& L) {
   int k = 0;
